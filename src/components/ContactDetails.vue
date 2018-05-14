@@ -28,9 +28,7 @@ export default {
   methods: {
     deleteContact (id) {
       contacts.remove(id)
-        .then((response) => {
-          this.$emit('contactDeleted', id)
-        })
+        .then()
     }
   }
 }
