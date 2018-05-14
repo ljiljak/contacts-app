@@ -3,10 +3,13 @@ import VueRouter from 'vue-router'
 import App from './App.vue'
 import Contacts from './pages/Contacts.vue'
 import AddContact from './pages/AddContact.vue'
+import MyDirectives from './plugins/MyDirectives'
 
 Vue.config.productionTip = false
 
 Vue.use(VueRouter)
+Vue.use(MyDirectives)
+
 
 const routes = [
   { path: '/', redirect: '/contacts' },
