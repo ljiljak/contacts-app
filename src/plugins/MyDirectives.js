@@ -1,3 +1,22 @@
+ const RULES = {
+          REQUIRED: 'required',
+          NUMBER: 'number',
+          EMAIL: 'email'
+        }
+
+const MESSAGES_CLASSNAME = 'validator-messages'
+
+
+const removeMessageErrorElement = (element) => {
+  //remove old messege
+  let oldMessageElement = 
+    element.querySelector(`#${MESSAGES_CLASSNAME}`)
+
+  if (oldMessageElement) {
+    oldMessageElement.remove()
+  }
+}
+
 const MyDirectives = {
   install: function(Vue) {
     
@@ -11,26 +30,26 @@ const MyDirectives = {
     // v-validate:required.email
     Vue.directive('validate', {
       inserted: function(element, binding) {
-        const RULES = {
-          REQUIRED: 'required',
-          NUMBER: 'number',
-          EMAIL: 'email'
-        }
-
-        // let isRequired = binding.arg === RULES.REQUIRED
-
         let validationRules = binding.value
 
-        console.log('event', Object.keys(validationRules))
         element.addEventListener ('submit', (event) => {
-          
-          
           event.preventDefault()
           Object.keys(validationRules).forEach(key => {
-            if (validationRules[key].indexOf(RULES.REQUIRED) > -1) {
+            let input = element.querySelector(`#${key}`)
+            if (!input) {
+              throw new Error('Element for validation rule ${key} not found!')
+            }
+
+            if (validationRules[key].indexOf(RULES.REQUIRED) > -1 && !input.value.length) {
               let messageElement = document.createElement ('div')
-              messageElement.innerElement = '${key.tuUpperCase()} is required'
+              messageElement.id = MESSAGES_CLASSNAME
+
+              removeMessageErrorElement(element)
+
+              messageElement.innerHTML = `${key.toUpperCase()} is required`
               element.appendChild(messageElement)
+            } else {
+                removeMessageErrorElement(element)
             }
           });
           event.preventDefault()

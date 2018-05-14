@@ -36,7 +36,7 @@
           <input 
           id="email" 
           name="email" 
-          type="email" 
+          type="text" 
           
           class="form-control here" 
           v-model="contact.email">
