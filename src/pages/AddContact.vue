@@ -1,7 +1,6 @@
 <template>
   <div class="container mt-4">
-    <form
-          v-validate="validationRules">
+    <form v-validate="validationConfig">
       <div class="form-group row">
         <label for="first_name" class="col-4 col-form-label">First Name</label>
         <div class="col-8">
@@ -76,9 +75,15 @@ export default {
         email: '',
         number: ''
       },
-      validationRules: {
-        email: [ 'required', 'email' ]
+      validationConfig: {
+        validationRules: {
+          email: [ 'required', 'email' ]
+        },
+        submitCallback: () => {
+          this.onSubmit()
+        }
       }
+      
     }
   },
 
